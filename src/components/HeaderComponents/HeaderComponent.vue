@@ -29,6 +29,7 @@ header {
     left: 0;
     height: 70px;
     background-color: $header-background-color;
+    z-index: 1000;
 
     .img-container {
         width: 7%;

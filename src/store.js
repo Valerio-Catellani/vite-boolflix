@@ -426,7 +426,7 @@ export const storeMethods = {
                 vote_count: element.vote_count,
                 release_date: element.release_date,
                 popularity: element.popularity,
-                imageLargge: store.imageURL + element.backdrop_path,
+                imageLarge: element.backdrop_path ? store.imageURL + element.backdrop_path : null,
             }
         });
         return newArray

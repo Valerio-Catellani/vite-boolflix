@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <main class="position-relative">
         <div class="bg-white container">
             MAIN -CONTENT
             <SearchResultsComponent />
