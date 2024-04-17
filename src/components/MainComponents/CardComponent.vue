@@ -19,14 +19,20 @@
                             <div class="star-container d-flex" v-for="i in stars.halfStars" :key="i">
                                 <img class="img-fluid w-100" src="/images/half-star.png" alt="star">
                             </div>
+                            <div class="star-container d-flex" v-for="i in stars.emptyStars" :key="i">
+                                <img class="img-fluid w-100" src="/images/empty-star.png" alt="star">
+                            </div>
                         </div>
                         <p>{{ info.description }}</p>
-                        <h6>Release date: {{ info.release_date }}</h6>
-                        <button @click.stop="closeDetails()"> clikc</button>
-
+                        <p>Release date: {{ info.release_date }}</p>
+                        <div v-if="flagUrl" class="flag-container mb-3">
+                            <img class="img-fluid w-100" :src="flagUrl" :alt="info.language">
+                        </div>
+                        <h6 class="mb-3" v-else>Language: {{ info.language }}</h6>
+                        <button class="btn btn-danger text-center align-self-center shadow-white"
+                            @click.stop="closeDetails()">Close
+                            Information</button>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -34,6 +40,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'CardComponent',
     props: ['info'],
@@ -57,13 +65,15 @@ export default {
             backYCompensation: 0,
             stars: {
                 fullStars: 0,
-                halfStars: 0
-            }
+                halfStars: 0,
+                emptyStars: 0
+            },
+            flagUrl: ''
         };
     },
     methods: {
         openDetails(el) {
-            console.log(this.info.imageLarge);
+
             this.$emit('openDetails');
             this.isFlipped = true;
             this.handleDegAnimation(0, 180, 1, '+');
@@ -111,7 +121,6 @@ export default {
             const rect = element.getBoundingClientRect();
             this.initialX = rect.left;
             this.initialY = rect.top;
-            console.log(this.initialX, this.initialY);
             //posizione dell'immagine che è la stessa del contenutore
             this.actualX = this.initialX;
             this.actualY = this.initialY;
@@ -165,6 +174,17 @@ export default {
     created() {
         this.stars.fullStars = Math.floor(this.info.vote_average / 2);
         this.stars.halfStars = Math.ceil(this.info.vote_average / 2) - this.stars.fullStars;
+        this.stars.emptyStars = 5 - this.stars.fullStars - this.stars.halfStars;
+
+        axios.get(`https://flagcdn.com/16x12/${this.info.language}.png`)
+            .then(() => {
+                this.hasFlag = true;
+                this.flagUrl = `https://flagcdn.com/16x12/${this.info.language}.png`;
+            })
+            .catch((error) => {
+                console.log('there is no flag');
+                this.flag.hasFlag = false;
+            })
     }
 }
 </script>
@@ -208,6 +228,10 @@ export default {
                 .star-container {
                     width: 20px;
                     aspect-ratio: 1/1;
+                }
+
+                .flag-container {
+                    width: 32px;
                 }
             }
 

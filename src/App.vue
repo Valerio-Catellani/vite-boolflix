@@ -38,8 +38,9 @@ export default {
     }
   },
   created() {
-    this.store.formattedResults = this.storeMethods.formatData(this.store.rawResults);
     // this.getSeries();
+    // this.getMovies();
+    //this.store.formattedResults = this.storeMethods.formatData(this.store.rawResults);
   }
 }
 </script>

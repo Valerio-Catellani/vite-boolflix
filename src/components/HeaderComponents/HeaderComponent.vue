@@ -5,8 +5,10 @@
                 <img class="img-fluid" src="/images/Boolflix_logo.jpg" alt="Boolflix logo">
             </div>
             <form class="d-flex" role="search">
-                <input class="form-control me-2 bg-dark-subtle" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-danger  text-dark " type="submit">Search</button>
+                <input class="form-control me-2 bg-dark-subtle" type="search" placeholder="Search" aria-label="Search"
+                    v-model="userSearch">
+                <button class="btn btn-outline-danger text-dark" type="submit" :disabled="!userSearch"
+                    @click.prevent="storeMethods.searchMedia(userSearch)">Search</button>
             </form>
 
         </div>
@@ -14,8 +16,16 @@
 </template>
 
 <script>
+import { store, storeMethods } from '../../store';
 export default {
     name: 'HeaderComponent',
+    data() {
+        return {
+            store,
+            storeMethods,
+            userSearch: ''
+        }
+    }
 }
 </script>
 
