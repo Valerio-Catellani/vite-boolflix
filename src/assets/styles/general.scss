@@ -17,5 +17,9 @@ $fa-font-path: '../fonts/webfonts';
 
 body{
     font-family: $basefont;
+    background-color: $body-background-color
 }
 
+.shadow-white {
+    box-shadow: 0 0 5px $contrast-color;
+}

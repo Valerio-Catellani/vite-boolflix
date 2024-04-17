@@ -1,0 +1,46 @@
+<template>
+    <Header class="shadow-white">
+        <div class="container d-flex align-items-center justify-content-between py-1">
+            <div class="img-container">
+                <img class="img-fluid" src="/images/Boolflix_logo.jpg" alt="Boolflix logo">
+            </div>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2 bg-dark-subtle" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-danger  text-dark " type="submit">Search</button>
+            </form>
+
+        </div>
+    </Header>
+</template>
+
+<script>
+export default {
+    name: 'HeaderComponent',
+}
+</script>
+
+<style lang="scss" scoped>
+@use '../../assets/styles/partials/variables' as *;
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    left: 0;
+    height: 70px;
+    background-color: $header-background-color;
+
+    .img-container {
+        width: 7%;
+        min-width: 90px;
+    }
+
+    button {
+        background-color: $main-red-color !important;
+
+        &:hover {
+            color: $contrast-color !important;
+        }
+    }
+}
+</style>
