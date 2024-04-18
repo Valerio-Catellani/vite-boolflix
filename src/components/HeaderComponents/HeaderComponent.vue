@@ -1,5 +1,5 @@
 <template>
-    <Header class="shadow-white">
+    <header class="shadow-white">
         <div class="container d-flex align-items-center justify-content-between py-1">
             <div class="img-container">
                 <img class="img-fluid" src="/images/Boolflix_logo.jpg" alt="Boolflix logo">
@@ -8,11 +8,10 @@
                 <input class="form-control me-2 bg-dark-subtle" type="search" placeholder="Search" aria-label="Search"
                     v-model="userSearch">
                 <button class="btn btn-outline-danger text-dark" type="submit" :disabled="!userSearch"
-                    @click.prevent="storeMethods.searchMedia(userSearch)">Search</button>
+                    @click.prevent="storeMethods.searchMedia(userSearch, ['movies', 'series'])">Search</button>
             </form>
-
         </div>
-    </Header>
+    </header>
 </template>
 
 <script>

@@ -1,5 +1,6 @@
 <template>
   <HeaderComponent />
+  <ModalBackgroundComponent v-if="store.showModal" />
   <MainComponent />
 </template>
 
@@ -8,12 +9,14 @@ import { store, storeMethods } from './store';
 import axios from 'axios';
 import HeaderComponent from './components/HeaderComponents/HeaderComponent.vue';
 import MainComponent from './components/MainComponents/MainComponent.vue';
+import ModalBackgroundComponent from './components/ModalBackgroundComponent.vue';
 
 export default {
   name: 'App',
   components: {
     HeaderComponent,
     MainComponent,
+    ModalBackgroundComponent
   },
   data() {
     return {

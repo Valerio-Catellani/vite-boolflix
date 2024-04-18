@@ -14,13 +14,25 @@ export const store = reactive({
             query: "a", //!required
         }
     },
-    searchResults: {
-        searchInput: '',
-        movies: [],
-        series: [],
-        all: [],
-    },
-    formattedResults: [],
+    showModal: false,
+
+    formattedResults: {
+        searched_movies: {
+            name: 'Searched Movies',
+            type: 'search',
+            searchInput: '',
+            results: []
+        },
+        searched_series: {
+            name: 'Searched Series',
+            type: 'search',
+            searchInput: '',
+            results: []
+        },
+    }
+
+
+
 });
 
 
@@ -33,13 +45,14 @@ export const storeMethods = {
             return {
                 id: element.id,
                 adult: element.adult,
-                image: store.imageURL + element.poster_path,
+                image: element.backdrop_path ? store.imageURL + element.poster_path : null,
                 description: element.overview,
                 language: element.original_language,
-                title: element.original_title,
+                title: element.title ?? element.name ?? 'no title aviable',
+                original_title: element.original_title ?? element.original_name ?? 'no original title aviable',
                 vote_average: element.vote_average,
                 vote_count: element.vote_count,
-                release_date: element.release_date,
+                release_date: element.release_date ?? element.first_air_date ?? 'no data infromation aviable',
                 popularity: element.popularity,
                 imageLarge: element.backdrop_path ? store.imageURL + element.backdrop_path : null,
             }
@@ -47,25 +60,24 @@ export const storeMethods = {
         return newArray
     },
 
-    searchMedia(input) {
+    searchMedia(input, arrayOfElementToSearch) {
         store.options.params.query = input;
-        store.searchResults.searchInput = input;
+        arrayOfElementToSearch.forEach(element => {
+            store.formattedResults[`searched_${element}`].searchInput = input  //setto il valore della ricerca all'interno degli array sopra
+        });
+        //console.log(store.formattedResults);
         axios.get(store.apiURL + store.endPoints.movies, store.options)
             .then((result) => {
-                store.searchResults.movies = result.data.results;
-                store.searchResults.movies = storeMethods.formatData(store.searchResults.movies);
+                store.formattedResults.searched_movies.results = storeMethods.formatData(result.data.results); //ottengo i risultati -> li formatto -> li metto nell'array
+
             }).catch((error) => {
                 console.log(error);
             })
         axios.get(store.apiURL + store.endPoints.series, store.options)
             .then((result) => {
-                store.searchResults.series = result.data.results;
-                store.searchResults.series = storeMethods.formatData(store.searchResults.series);
-                store.searchResults.all = store.searchResults.movies.concat(store.searchResults.series);
+                store.formattedResults.searched_series.results = storeMethods.formatData(result.data.results);
             }).catch((error) => {
                 console.log(error);
             });
-        console.log(store.searchResults.series);
-        ;
     }
 }

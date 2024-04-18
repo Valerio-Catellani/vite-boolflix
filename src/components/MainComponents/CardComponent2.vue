@@ -1,7 +1,8 @@
 <template>
     <div class="film-card">
-        <div class="card-playground" ref="playground" :class="isFlipped ? 'flipped' : 'inactive'"
-            :style="{ transform: `rotateY(${rotDeg}deg)`, left: `${initialX}px`, top: `calc(${initialY}px + 70px)` }"
+        <div class="card-playground"
+            :class="{ 'flipped': isFlipped, 'inactive': !isFlipped, 'move-to-center-animation': move, 'rotate-card-animation': rotate }"
+            :style="{ transform: `rotateY(${rotDeg}deg)`, left: `${finalX}px`, top: `${finalY}px` }" ref="playground"
             @click="!isFlipped ? openDetails($event.target) : ''">
             <div class="front img-container">
                 <img v-if="info.image" class="img-fluid h-100" :src="info.image" :alt="info.title">
@@ -9,13 +10,11 @@
                     <h3 class="text-white text-center p-2 overflow-hidden">{{ info.title }}</h3>
                 </div>
             </div>
-            <div class="back border-dark border rounded-2" :class="{ 'opacity-0': !isFlipped }"
+            <div class="back border-dark border rounded-2" :class="!isFlipped ? 'opacity-0' : ''"
                 :style="`width: ${startingWidth}px; height: ${startingHeight}px; left:${backXCompensation}px; top:${backYCompensation}px; background-image: url('${info.imageLarge}')`">
-                <div class="filter h-100 d-flex justify-content-center justify-content-md-start "
-                    :class="{ 'full': !info.imageLarge }">
-                    <div
-                        class="information d-flex align-self-end w-50 w-75  flex-column align-items-start text-white p-3">
-                        <h2 class="mine-text-shadow display-6 display-md-4 fw-bold ">{{ info.title }}</h2>
+                <div class="filter h-100 d-flex" :class="info.imageLarge != null ? '' : 'full'">
+                    <div class="d-flex align-self-end w-75 flex-column align-items-start text-white p-3">
+                        <h2 class="mine-text-shadow display-4 fw-bold ">{{ info.title }}</h2>
                         <h5 class="mine-text-shadow mb-3">Original title: {{ info.original_title }}</h5>
                         <div class="d-flex gap-1 align-items-center mb-3">
                             <h6 class="mb-0">Score ({{ info.vote_count }} votes): </h6>
@@ -50,21 +49,25 @@ import axios from 'axios';
 import { store, storeMethods } from '../../store';
 
 export default {
-    name: 'CardComponent',
+    name: 'CardComponent2',
     props: ['info'],
     data() {
         return {
             store,
             storeMethods,
+            move: false,
+            rotate: false,
             isFlipped: false,
             backgroundImage: `url('${this.info.imageLarge}')`,
             rotDeg: 0,
             initialX: null,
             initialY: null,
+            finalX: null,
+            finalY: null,
             startingWidth: 250,
             startingHeight: 400,
-            endingWidth: 900,
-            endingHeight: 600,
+            endingWidth: 1000,
+            endingHeight: 700,
             backXCompensation: 0,
             backYCompensation: 0,
             stars: {
@@ -79,11 +82,13 @@ export default {
         openDetails() {
             this.store.showModal = true;
             this.isFlipped = true;
-            this.handleWiewprth();
-            this.handleDegAnimation(0, 180, 1, '+');
-            this.expandDetailsX();
-            this.expandDetailsY();
             this.moveToCenter();
+            setTimeout(() => {
+                this.rotate = true;
+            }
+                , 1100);
+
+
 
         },
         closeDetails() {
@@ -91,8 +96,6 @@ export default {
             this.isFlipped = false;
             this.startingWidth = 250;
             this.startingHeight = 400;
-            this.endingWidth = 900;
-            this.endingHeight = 600;
             this.backXCompensation = 0;
             this.backYCompensation = 0;
             this.store.showModal = false;
@@ -100,56 +103,20 @@ export default {
 
 
 
-        handleDegAnimation(StartingValue, EndingValue, milliseconds, operation) {
-            if (operation === '+') {
-                const interval = setInterval(() => {
-                    if (StartingValue >= EndingValue) {
-                        clearInterval(interval);
-                    } else {
-                        StartingValue++;
-                        this.rotDeg = StartingValue;
-                    }
-                }, milliseconds);
-            } else {
-                const interval = setInterval(() => {
-                    if (StartingValue <= EndingValue) {
-                        clearInterval(interval);
-                    } else {
-                        StartingValue = StartingValue - 180;
-                        this.rotDeg = StartingValue;
-                    }
-                }, milliseconds);
-            }
-        },
 
-        /**
-         * Funzione che si occupa di spostare l'elemento in posizione centrale
-         */
+
         moveToCenter() {
-            //ottengo il centro dello schermo a cui vado a sotrrarre metà dell'altezza della carta
-            let playground = this.$refs.playground;
-            const centerX = window.innerWidth / 2 - (250 / 2);
-            const centerY = window.innerHeight / 2 - (400 / 2);
-            //posizione iniziale del playground (che andremo a modificare ogni interval finchè non si troverà in posizione centrale)
-            const rect = playground.getBoundingClientRect();
-            this.initialX = rect.left;
-            this.initialY = rect.top;
+            this.move = true;
+            const rect = this.$refs.playground.getBoundingClientRect();
+            const startX = rect.left;
+            const startY = rect.top;
 
-            const interval = setInterval(() => {
-                //calcolo le differenze tra la posizione desiderata (i centri dello schermo) e quella corrente
-                const diffX = centerX - this.initialX;
-                const diffY = centerY - this.initialY;
-                // Sposta l'elemento gradualmente verso il centro
-                this.initialX = this.initialX + diffX * 0.1
-                this.initialY = this.initialY + diffY * 0.1
-                // Se l'elemento è abbastanza vicino al centro, interrompi l'animazione
-                const distance = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
-                if (distance < 1) { // Utilizziamo un valore di tolleranza di 1 pixel
-                    clearInterval(interval);
-                }
-            }, 16);
+            // Imposta le variabili CSS personalizzate per passare le coordinate iniziali all'animazione
+            this.$refs.playground.style.setProperty('--startX', `${startX}px`);
+            this.$refs.playground.style.setProperty('--startY', `${startY}px`);
+            this.$refs.playground.style.setProperty('--startY', ``);
+            this.$refs.playground.style.setProperty('', `${startY}px`);
         },
-
         expandDetailsX() {
             const inerval = setInterval(() => {
                 if (this.startingWidth < this.endingWidth) {
@@ -172,37 +139,22 @@ export default {
             }, 10)
         },
 
-        handleWiewprth() {
-            if (window.innerWidth < 760) {
-                this.endingWidth = 550;
-                this.endingHeight = 600
-            }
-            else if (window.innerWidth < 850) {
-                this.endingWidth = 700;
-                this.endingHeight = 650
-            } else if (window.innerWidth < 1050) {
-                this.endingWidth = 750;
-                this.endingHeight = 600
-            }
-        },
-
     },
     created() {
         this.stars.fullStars = Math.floor(this.info.vote_average / 2);
         this.stars.halfStars = Math.ceil(this.info.vote_average / 2) - this.stars.fullStars;
         this.stars.emptyStars = 5 - this.stars.fullStars - this.stars.halfStars;
+        console.log(this.info);
+
         axios.get(`https://flagcdn.com/16x12/${this.info.language}.png`)
             .then(() => {
                 this.hasFlag = true;
                 this.flagUrl = `https://flagcdn.com/16x12/${this.info.language}.png`;
             })
             .catch((error) => {
-
-                console.log('there is no flag', error);
+                console.log('there is no flag');
             })
-    },
-
-
+    }
 }
 </script>
 
@@ -213,13 +165,6 @@ export default {
 .film-card {
     width: 250px;
     height: 400px;
-    box-shadow: rgba(255, 255, 255, 0.4) 0px 5px, rgba(230, 230, 230, 0.3) 0px 10px, rgba(204, 204, 204, 0.2) 0px 15px, rgba(179, 179, 179, 0.1) 0px 20px, rgba(153, 153, 153, 0.05) 0px 25px;
-
-
-    &:hover {
-        box-shadow: rgba(255, 0, 0, 0.4) 0px 5px, rgba(255, 51, 51, 0.3) 0px 10px, rgba(255, 102, 102, 0.2) 0px 15px, rgba(255, 153, 153, 0.1) 0px 20px, rgba(255, 204, 204, 0.05) 0px 25px;
-    }
-
 
     .card-playground {
         width: 250px;
@@ -254,12 +199,6 @@ export default {
             .filter {
                 background: linear-gradient(0deg, rgba(0, 0, 0, 1) 23%, rgba(0, 0, 0, 0) 100%);
 
-                @media screen and (max-width: 768px) {
-                    .information {
-                        width: 60% !important;
-                    }
-                }
-
                 h2 {
                     color: $main-red-color;
                 }
@@ -282,7 +221,7 @@ export default {
 }
 
 .flipped {
-    position: fixed !important;
+    position: absolute !important;
     z-index: 100;
 }
 
@@ -292,5 +231,46 @@ export default {
 
 .back {
     transform: rotateY(180deg); // Inizialmente mostra la parte posteriore della carta
+}
+
+
+
+@keyframes moveToCenterAnimation {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(calc(50vw - 50% - var(--startX)), calc(50vh - 50% - var(--startY)));
+    }
+}
+
+.move-to-center-animation {
+    animation-name: moveToCenterAnimation;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes rotateCard {
+    0% {
+        transform: rotateY(0deg);
+        /* Angolo di rotazione iniziale */
+    }
+
+    100% {
+        transform: rotateY(180deg);
+        /* Angolo di rotazione finale */
+    }
+}
+
+.rotate-card-animation {
+    animation-name: rotateCard;
+    animation-duration: 1s;
+    /* Durata dell'animazione */
+    animation-timing-function: ease;
+    /* Tipo di timing */
+    animation-fill-mode: forwards;
+    /* Mantieni l'ultimo frame */
 }
 </style>
