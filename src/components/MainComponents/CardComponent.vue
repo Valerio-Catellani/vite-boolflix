@@ -213,7 +213,6 @@ export default {
 .film-card {
     width: 250px;
     height: 400px;
-    box-shadow: rgba(255, 255, 255, 0.4) 0px 5px, rgba(230, 230, 230, 0.3) 0px 10px, rgba(204, 204, 204, 0.2) 0px 15px, rgba(179, 179, 179, 0.1) 0px 20px, rgba(153, 153, 153, 0.05) 0px 25px;
 
 
     &:hover {
@@ -225,6 +224,7 @@ export default {
         width: 250px;
         height: 400px;
         transform-style: preserve-3d;
+        z-index: 1000;
         position: relative;
 
         .front,

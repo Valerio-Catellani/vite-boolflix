@@ -9,12 +9,15 @@
             </div>
             <h2 v-else-if="typeOfCollection === 'normal'">{{ title }}</h2>
         </div>
-        <div class="card-list-card-container container position-relative d-flex">
-            <div class="arrow-container">
+        <div ref="containerDimensioned"
+            class="card-list-card-container container d-flex position-relative overflow-hidden">
+            <div v-if="count !== 0" class="arrow-container" @click="scroll('left')">
                 <i class="arrow fa-solid fa-caret-left fa-2xl mine-text-shadow"></i>
             </div>
-            <CardComponent v-for="element in arrayValues" :key="element.id" :info="element" />
-            <div class="arrow-container arrow-container-right">
+            <div ref="scrollable" class="d-flex position-relative scrollable">
+                <CardComponent v-for="element in arrayValues" :key="element.id" :info="element" />
+            </div>
+            <div v-if="-count < maxScroll" class="arrow-container arrow-container-right" @click="scroll('right')">
                 <i class="arrow fa-solid fa-caret-right fa-2xl mine-text-shadow"></i>
             </div>
         </div>
@@ -53,12 +56,37 @@ export default {
     },
     data() {
         return {
-
+            moveValue: 0,
+            count: 0,
+            maxScroll: 0
         }
     },
     methods: {
+        scroll(direction) {
 
-    }
+            if (direction === 'left') {
+                this.moveValue += 250;
+                this.count++
+                this.$refs.scrollable.setAttribute('style', `left: ${this.moveValue}px`);
+            } else {
+                this.moveValue -= 250
+                this.count--
+                this.$refs.scrollable.setAttribute('style', `left: ${this.moveValue}px`)
+                console.log(this.count, this.maxScroll);
+            }
+        },
+        measureContainerWidth() {
+            const containerWidth = this.$refs.containerDimensioned.clientWidth;
+            this.maxScroll = this.arrayValues.length - Math.floor(containerWidth / 250)
+        }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.measureContainerWidth();
+            window.addEventListener('resize', this.measureContainerWidth);
+        });
+    },
+
 }
 </script>
 
@@ -66,6 +94,10 @@ export default {
 @use '../../assets/styles/partials/variables' as *;
 
 .card-list-card-container {
+
+    .scrollable {
+        transition: left 0.5s;
+    }
 
     .arrow-container {
         position: absolute;
@@ -93,6 +125,8 @@ export default {
     .arrow-container-right {
         right: 0;
     }
+
+
 
 
 }
