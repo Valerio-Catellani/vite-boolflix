@@ -41,7 +41,8 @@ export default {
     }
   },
   created() {
-    // this.getSeries();
+    this.storeMethods.findTreningWeek();
+    this.storeMethods.findPopularSeries()
     // this.getMovies();
     //this.store.formattedResults = this.storeMethods.formatData(this.store.rawResults);
   }

@@ -1,16 +1,16 @@
 <template>
-    <div class="card-list-container">
-        <div class="card-list-title container">
+    <div class="card-list-container my-3 py-3">
+        <div class="card-list-title container text-white ps-0">
             <div v-if="typeOfCollection === 'search' && searchParameter">
-                <h2 v-if="arrayValues.length === 0">No {{ title }} results found for "{{ searchParameter
+                <h4 v-if="arrayValues.length === 0">No {{ title }} results found for "{{ searchParameter
                     }}"
-                </h2>
-                <h2 v-else>{{ title }} for "{{ searchParameter }}"</h2>
+                </h4>
+                <h4 v-else>{{ title }} for "{{ searchParameter }}"</h4>
             </div>
-            <h2 v-else-if="typeOfCollection === 'normal'">{{ title }}</h2>
+            <h4 v-else-if="typeOfCollection === 'normal'">{{ title }}</h4>
         </div>
         <div ref="containerDimensioned"
-            class="card-list-card-container container d-flex position-relative overflow-hidden">
+            class="card-list-card-container container d-flex position-relative overflow-x-hidden px-0">
             <div v-if="count !== 0" class="arrow-container" @click="scroll('left')">
                 <i class="arrow fa-solid fa-caret-left fa-2xl mine-text-shadow"></i>
             </div>
@@ -65,19 +65,18 @@ export default {
         scroll(direction) {
 
             if (direction === 'left') {
-                this.moveValue += 250;
+                this.moveValue += 125; //!
                 this.count++
                 this.$refs.scrollable.setAttribute('style', `left: ${this.moveValue}px`);
             } else {
-                this.moveValue -= 250
+                this.moveValue -= 125 //!
                 this.count--
                 this.$refs.scrollable.setAttribute('style', `left: ${this.moveValue}px`)
-                console.log(this.count, this.maxScroll);
             }
         },
         measureContainerWidth() {
             const containerWidth = this.$refs.containerDimensioned.clientWidth;
-            this.maxScroll = this.arrayValues.length - Math.floor(containerWidth / 250)
+            this.maxScroll = this.arrayValues.length - Math.floor(containerWidth / 125) //!
         }
     },
     mounted() {
@@ -94,6 +93,7 @@ export default {
 @use '../../assets/styles/partials/variables' as *;
 
 .card-list-card-container {
+    height: 220px;
 
     .scrollable {
         transition: left 0.5s;
@@ -124,6 +124,8 @@ export default {
 
     .arrow-container-right {
         right: 0;
+        background: linear-gradient(-90deg, rgba(0, 0, 0, 0.9640231092436975) 4%, rgba(80, 80, 80, 0.3925945378151261) 78%, rgba(0, 0, 0, 0) 200%);
+
     }
 
 

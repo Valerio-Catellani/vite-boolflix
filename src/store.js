@@ -7,11 +7,14 @@ export const store = reactive({
     endPoints: {
         movies: "search/movie",
         series: "search/tv",
+        trending_movie_week: "trending/movie/week",
+        series_poplar: "tv/popular"
     },
     options: {
         params: {
             api_key: "a777a28e1bd1eb689e9612e8f5298de8", //!required
             query: "a", //!required
+            language: "en-US", //!required
         }
     },
     showModal: false,
@@ -29,8 +32,17 @@ export const store = reactive({
             searchInput: '',
             results: []
         },
+        trending_week_movies: {
+            name: 'Movies Trending this Week',
+            type: 'normal',
+            results: []
+        },
+        popular_series: {
+            name: 'Popular Series',
+            type: 'normal',
+            results: []
+        },
     }
-
 
 
 });
@@ -39,7 +51,6 @@ export const store = reactive({
 
 
 export const storeMethods = {
-
     formatData(data) {
         let newArray = data.map((element) => {
             return {
@@ -59,7 +70,6 @@ export const storeMethods = {
         });
         return newArray
     },
-
     searchMedia(input, arrayOfElementToSearch) {
         store.options.params.query = input;
         arrayOfElementToSearch.forEach(element => {
@@ -79,5 +89,20 @@ export const storeMethods = {
             }).catch((error) => {
                 console.log(error);
             });
+        store.options.params.query = '';
+    },
+    findTreningWeek() {
+        axios.get(store.apiURL + store.endPoints.trending_movie_week, store.options).then((result) => {
+            store.formattedResults.trending_week_movies.results = storeMethods.formatData(result.data.results);
+        }).catch((error) => {
+            console.log(error);
+        })
+    },
+    findPopularSeries() {
+        axios.get(store.apiURL + store.endPoints.series_poplar, store.options).then((result) => {
+            store.formattedResults.popular_series.results = storeMethods.formatData(result.data.results);
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 }

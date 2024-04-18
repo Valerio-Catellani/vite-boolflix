@@ -1,18 +1,18 @@
 <template>
     <div class="film-card">
         <div class="card-playground" ref="playground" :class="isFlipped ? 'flipped' : 'inactive'"
-            :style="{ transform: `rotateY(${rotDeg}deg)`, left: `${initialX}px`, top: `calc(${initialY}px + 70px)` }"
+            :style="{ transform: `rotateY(${rotDeg}deg)`, left: `${initialX}px`, top: `calc(${initialY}px)` }"
             @click="!isFlipped ? openDetails($event.target) : ''">
             <div class="front img-container">
                 <img v-if="info.image" class="img-fluid h-100" :src="info.image" :alt="info.title">
                 <div v-else class="no-image h-100">
-                    <h3 class="text-white text-center p-2 overflow-hidden">{{ info.title }}</h3>
+                    <h6 class="text-white text-center p-2 overflow-hidden">{{ info.title }}</h6>
                 </div>
             </div>
-            <div class="back border-dark border rounded-2" :class="{ 'opacity-0': !isFlipped }"
+            <div class="back border-dark border rounded-2 overflow-hidden" :class="{ 'opacity-0': !isFlipped }"
                 :style="`width: ${startingWidth}px; height: ${startingHeight}px; left:${backXCompensation}px; top:${backYCompensation}px; background-image: url('${info.imageLarge}')`">
                 <div class="filter h-100 d-flex justify-content-center justify-content-md-start "
-                    :class="{ 'full': !info.imageLarge }">
+                    :class="{ 'full': !info.imageLarge }" :style="`opacity: ${opacity};`">
                     <div
                         class="information d-flex align-self-end w-50 w-75  flex-column align-items-start text-white p-3">
                         <h2 class="mine-text-shadow display-6 display-md-4 fw-bold ">{{ info.title }}</h2>
@@ -35,9 +35,13 @@
                             <img class="img-fluid w-100" :src="flagUrl" :alt="info.language">
                         </div>
                         <h6 class="mb-3" v-else>Language: {{ info.language }}</h6>
-                        <button class="btn btn-danger text-center align-self-center shadow-white"
-                            @click.stop="closeDetails()">Close
-                            Information</button>
+                        <div class="d-flex justify-content-center align-items-center align-self-center ">
+                            <i class="play mine-text-white-shadow border border-black text-success fa-regular fa-circle-play px-5"
+                                role="button"></i>
+                            <button class="btn btn-danger text-center align-self-center shadow-white"
+                                @click.stop="closeDetails()">Close
+                                Information</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,10 +63,11 @@ export default {
             isFlipped: false,
             backgroundImage: `url('${this.info.imageLarge}')`,
             rotDeg: 0,
+            opacity: 0,
             initialX: null,
             initialY: null,
-            startingWidth: 250,
-            startingHeight: 400,
+            startingWidth: 125,
+            startingHeight: 200,
             endingWidth: 900,
             endingHeight: 600,
             backXCompensation: 0,
@@ -84,13 +89,22 @@ export default {
             this.expandDetailsX();
             this.expandDetailsY();
             this.moveToCenter();
+            setTimeout(() => {
+                const interval = setInterval(() => {
+                    if (this.opacity >= 1) {
+                        clearInterval(interval);
+                    } else {
+                        this.opacity += 0.05;
+                    }
+                }, 50);
+            }, 700);
 
         },
         closeDetails() {
             this.handleDegAnimation(180, 0, 1, '-');
             this.isFlipped = false;
-            this.startingWidth = 250;
-            this.startingHeight = 400;
+            this.startingWidth = 125; //!
+            this.startingHeight = 200; //!
             this.endingWidth = 900;
             this.endingHeight = 600;
             this.backXCompensation = 0;
@@ -128,13 +142,12 @@ export default {
         moveToCenter() {
             //ottengo il centro dello schermo a cui vado a sotrrarre metà dell'altezza della carta
             let playground = this.$refs.playground;
-            const centerX = window.innerWidth / 2 - (250 / 2);
-            const centerY = window.innerHeight / 2 - (400 / 2);
+            const centerX = window.innerWidth / 2 - (125 / 2); //!
+            const centerY = window.innerHeight / 2 - (200 / 2); //!
             //posizione iniziale del playground (che andremo a modificare ogni interval finchè non si troverà in posizione centrale)
             const rect = playground.getBoundingClientRect();
             this.initialX = rect.left;
             this.initialY = rect.top;
-
             const interval = setInterval(() => {
                 //calcolo le differenze tra la posizione desiderata (i centri dello schermo) e quella corrente
                 const diffX = centerX - this.initialX;
@@ -154,7 +167,7 @@ export default {
             const inerval = setInterval(() => {
                 if (this.startingWidth < this.endingWidth) {
                     this.startingWidth += 10;
-                    this.backXCompensation = -(this.startingWidth - 250) / 2;
+                    this.backXCompensation = -(this.startingWidth - 125) / 2; //!
                 } else {
                     clearInterval(inerval);
                 }
@@ -164,7 +177,7 @@ export default {
             const inerval = setInterval(() => {
                 if (this.startingHeight < this.endingHeight) {
                     this.startingHeight += 10;
-                    this.backYCompensation = -(this.startingHeight - 350) / 2;
+                    this.backYCompensation = -(this.startingHeight - 200) / 2; //!
 
                 } else {
                     clearInterval(inerval);
@@ -211,9 +224,9 @@ export default {
 @use '../../assets/styles/partials/variables' as *;
 
 .film-card {
-    width: 250px;
-    height: 400px;
-
+    width: 125px; //!
+    height: 200px; //!
+    box-shadow: rgba(255, 255, 255, 0.4) 0px 5px, rgba(230, 230, 230, 0.3) 0px 10px, rgba(204, 204, 204, 0.2) 0px 15px, rgba(179, 179, 179, 0.1) 0px 20px, rgba(153, 153, 153, 0.05) 0px 25px;
 
     &:hover {
         box-shadow: rgba(255, 0, 0, 0.4) 0px 5px, rgba(255, 51, 51, 0.3) 0px 10px, rgba(255, 102, 102, 0.2) 0px 15px, rgba(255, 153, 153, 0.1) 0px 20px, rgba(255, 204, 204, 0.05) 0px 25px;
@@ -221,8 +234,8 @@ export default {
 
 
     .card-playground {
-        width: 250px;
-        height: 400px;
+        width: 125px; //!
+        height: 200px; //!
         transform-style: preserve-3d;
         z-index: 1000;
         position: relative;
@@ -272,10 +285,15 @@ export default {
                 .flag-container {
                     width: 32px;
                 }
+
+                .play {
+                    font-size: 4rem;
+                }
             }
 
             .full {
                 background: black;
+                opacity: 1 !important
             }
         }
     }

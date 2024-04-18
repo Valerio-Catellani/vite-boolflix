@@ -1,7 +1,6 @@
 <template>
     <main class="position-relative">
-        <div class="bg-white container">
-            MAIN -CONTENT
+        <div class=" container">
             <SearchResultsComponent v-for="element in findEmptyResults" :key="element[1].name"
                 :arrayValues="element[1].results" :title="element[1].name" :searchParameter="element[1].searchInput"
                 :typeOfCollection="element[1].type" />
@@ -26,6 +25,8 @@ export default {
     computed: {
         findEmptyResults() {
             let emptyResults = Object.entries(store.formattedResults).filter(element => {
+                //console.log(Object.entries(store.formattedResults));
+                console.log(element[0], element[1]);
                 return element[1].results.length > 0
             })
             return emptyResults
