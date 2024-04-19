@@ -1,4 +1,5 @@
 <template>
+  <SplashPageComponent />
   <HeaderComponent />
   <ModalBackgroundComponent v-if="store.showModal" />
   <MainComponent />
@@ -10,13 +11,15 @@ import axios from 'axios';
 import HeaderComponent from './components/HeaderComponents/HeaderComponent.vue';
 import MainComponent from './components/MainComponents/MainComponent.vue';
 import ModalBackgroundComponent from './components/ModalBackgroundComponent.vue';
+import SplashPageComponent from './components/SplashPageComponent.vue';
 
 export default {
   name: 'App',
   components: {
     HeaderComponent,
     MainComponent,
-    ModalBackgroundComponent
+    ModalBackgroundComponent,
+    SplashPageComponent
   },
   data() {
     return {

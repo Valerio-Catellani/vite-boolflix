@@ -4,7 +4,7 @@
             class="highlight-info text-white d-flex justify-content-end flex-column align-items-center align-items-md-start pt-3">
             <h2 class="mine-main-color mine-text-shadow display-6 fw-bold mb-3"> {{ info.title }} </h2>
             <h6 class="mb-4 pb-2">Popularity : {{ info.popularity }}</h6>
-            <div class="d-flex align-items-center ">
+            <div class="button-container d-flex align-items-center ">
                 <button class="btn btn-mine hover-size text-white p-xl-3 p-2 me-xl-4 me-2" @click="muted">More
                     Information</button>
                 <div class="icon-container rounded-circle" style="width: 50px; height: 50px;" role="button">
@@ -17,7 +17,9 @@
             <div class="border-video d-flex align-items-center justify-content-center overflow-hidden">
                 <div class="left-border-gradient h-100"></div>
                 <iframe ref="mineVideo" width="700" height="615" :src="info.video" title="YouTube video player"
-                    frameborder="10" allow=" autoplay" referrerpolicy=" strict-origin-when-cross-origin">
+                    frameborder="10"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy=" strict-origin-when-cross-origin">
                 </iframe>
                 <div class="right-border-gradient h-100"></div>
             </div>
@@ -51,6 +53,13 @@ export default {
 
 .highlight-info {
     width: 35%;
+
+
+    .button-container,
+    h2,
+    h6 {
+        animation: moveUp 0.5s ease-in-out alternate forwards;
+    }
 
     .fa-plus {
         font-size: 2rem;
@@ -151,5 +160,17 @@ export default {
             height: 350px;
         }
     }
+}
+
+
+@keyframes moveUp {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(+50px);
+    }
+
 }
 </style>
