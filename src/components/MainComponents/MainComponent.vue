@@ -1,6 +1,6 @@
 <template>
     <main class="position-relative">
-        <VideoPreviewComponent />
+        <CaruselComponent />
         <div class=" container">
             <SearchResultsComponent v-for="element in findEmptyResults" :key="element[1].name"
                 :arrayValues="element[1].results" :title="element[1].name" :searchParameter="element[1].searchInput"
@@ -12,13 +12,13 @@
 <script>
 import { store } from '../../store';
 import SearchResultsComponent from '../MainComponents/SearchResultsComponent.vue';
-import VideoPreviewComponent from '../MainComponents/VideoPreviewComponent.vue';
+import CaruselComponent from '../MainComponents/CaruselComponent.vue';
 
 export default {
     name: 'MainComponent',
     components: {
         SearchResultsComponent,
-        VideoPreviewComponent
+        CaruselComponent
     },
     data() {
         return {

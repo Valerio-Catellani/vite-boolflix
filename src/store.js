@@ -13,8 +13,8 @@ export const store = reactive({
     options: {
         params: {
             api_key: "a777a28e1bd1eb689e9612e8f5298de8", //!required
-            query: "a", //!required
-            language: "en-US", //!required
+            query: "", //!required
+            language: "", //!required
         }
     },
     showModal: false,
@@ -42,6 +42,11 @@ export const store = reactive({
             type: 'normal',
             results: []
         },
+        carusel: {
+            name: 'Carusel',
+            type: 'normal',
+            results: []
+        },
     }
 
 
@@ -56,6 +61,7 @@ export const storeMethods = {
             return {
                 id: element.id,
                 adult: element.adult,
+                video: '',
                 image: element.backdrop_path ? store.imageURL + element.poster_path : null,
                 description: element.overview,
                 language: element.original_language,
@@ -92,13 +98,17 @@ export const storeMethods = {
             });
         store.options.params.query = '';
     },
-
     findTreningWeek() {
+        store.options.params.language = 'en-US';
         axios.get(store.apiURL + store.endPoints.trending_movie_week, store.options).then((result) => {
             store.formattedResults.trending_week_movies.results = storeMethods.formatData(result.data.results);
+            store.options.params.language = '';
+            storeMethods.createCarusel(store.formattedResults.trending_week_movies.results)
         }).catch((error) => {
             console.log(error);
+        }).finally(() => {
         })
+        store.options.params.language = '';
     },
     findPopularSeries() {
         axios.get(store.apiURL + store.endPoints.series_poplar, store.options).then((result) => {
@@ -132,5 +142,22 @@ export const storeMethods = {
             default: 'none'
 
         }
+    },
+    createCarusel(infromation) {
+        store.formattedResults.carusel.results = infromation.slice(0, 5);
+        console.log(store.formattedResults.carusel.results);
+        store.formattedResults.carusel.results.forEach(element => {
+            axios.get(store.apiURL + 'movie/' + element.id + '/videos', store.options).then((result) => {
+                let video_key = result.data.results[2].key;
+                let video_url = `https://www.youtube.com/embed/${video_key}?si=7WVdVnX7WPoDjXed&amp;controls=0&autoplay=1&loop=1&playlist=${video_key}&rel=0&end=30&showinfo=0&modestbranding=1`;
+                element.video = video_url
+                console.log(element);
+            }).catch((error) => {
+                console.log(error);
+            })
+        })
+
     }
 }
+
+
