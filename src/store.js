@@ -47,7 +47,12 @@ export const store = reactive({
             type: 'normal',
             results: []
         },
-    }
+    },
+    carusel: {
+        name: 'Carusel',
+        type: 'normal',
+        results: []
+    },
 
 
 });
@@ -144,14 +149,12 @@ export const storeMethods = {
         }
     },
     createCarusel(infromation) {
-        store.formattedResults.carusel.results = infromation.slice(0, 5);
-        console.log(store.formattedResults.carusel.results);
-        store.formattedResults.carusel.results.forEach(element => {
+        store.carusel.results = infromation.slice(0, 5);
+        store.carusel.results.forEach(element => {
             axios.get(store.apiURL + 'movie/' + element.id + '/videos', store.options).then((result) => {
                 let video_key = result.data.results[2].key;
                 let video_url = `https://www.youtube.com/embed/${video_key}?si=7WVdVnX7WPoDjXed&amp;controls=0&autoplay=1&loop=1&playlist=${video_key}&rel=0&end=30&showinfo=0&modestbranding=1`;
                 element.video = video_url
-                console.log(element);
             }).catch((error) => {
                 console.log(error);
             })

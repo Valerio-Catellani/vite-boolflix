@@ -2,19 +2,19 @@
     <div class="wrapper px-5">
         <div id="carouselExampleIndicators" class="carousel slide h-100 container">
             <div class="carousel-inner container pt-4">
-                <template v-for="element in store.formattedResults.carusel.results" :key="element">
-                    <div class="carousel-item" :class="{ 'active': i === count }" v-if="i === count">
+                <template v-for="(element, index) in store.carusel.results" :key="element">
+                    <div class="carousel-item" :class="{ 'active': index === count - 1 }" v-if="index === count - 1">
                         <VideoPreviewComponent :info="element" />
                     </div>
                 </template>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                @click="count <= 1 ? count = numberOfElements : count--">
+                @click="count <= 1 ? count = 5 : count--">
                 <i class="arrow fa-solid fa-caret-left fa-2xl mine-text-shadow"></i>
                 <span class="visually-hidden">Previous</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                @click="count < numberOfElements ? count++ : count = 1">
+                @click="count < 5 ? count++ : count = 1">
                 <i class="arrow fa-solid fa-caret-right fa-2xl mine-text-shadow"></i>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -41,7 +41,7 @@ export default {
         return {
             store,
             storeMethods,
-            numberOfElements: store.formattedResults.carusel.results.length,
+            numberOfElements: 5,
             count: 1,
         }
     }

@@ -16,10 +16,8 @@
         <div class="w-70 h-100 d-flex flex-column justify-content-between align-items-center ">
             <div class="border-video d-flex align-items-center justify-content-center overflow-hidden">
                 <div class="left-border-gradient h-100"></div>
-                <iframe ref="mineVideo" width="700" height="615"
-                    src="https://www.youtube.com/embed/YUP3vA-Hq_k?si=7WVdVnX7WPoDjXed&amp;controls=0&autoplay=1&loop=1&playlist=YUP3vA-Hq_k&rel=0&end=30&showinfo=0&modestbranding=1"
-                    title="YouTube video player" frameborder="10" allow=" autoplay"
-                    referrerpolicy=" strict-origin-when-cross-origin">
+                <iframe ref="mineVideo" width="700" height="615" :src="info.video" title="YouTube video player"
+                    frameborder="10" allow=" autoplay" referrerpolicy=" strict-origin-when-cross-origin">
                 </iframe>
                 <div class="right-border-gradient h-100"></div>
             </div>
@@ -38,8 +36,10 @@ export default {
 
     // J-GWW9LIOb0
     methods: {
+
     },
     created() {
+
     }
 }
 </script>
