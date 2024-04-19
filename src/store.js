@@ -18,7 +18,7 @@ export const store = reactive({
         }
     },
     showModal: false,
-
+    isLoading: false,
     formattedResults: {
         searched_movies: {
             name: 'Searched Movies',
@@ -83,6 +83,7 @@ export const storeMethods = {
         return newArray
     },
     searchMedia(input, arrayOfElementToSearch) {
+        store.isLoading = true;
         store.options.params.query = input;
         arrayOfElementToSearch.forEach(element => {
             store.formattedResults[`searched_${element}`].searchInput = input  //setto il valore della ricerca all'interno degli array sopra
@@ -100,6 +101,10 @@ export const storeMethods = {
                 store.formattedResults.searched_series.results = storeMethods.formatData(result.data.results);
             }).catch((error) => {
                 console.log(error);
+            }).finally(() => {
+                setTimeout(() => {
+                    store.isLoading = false
+                }, 1000)
             });
         store.options.params.query = '';
     },

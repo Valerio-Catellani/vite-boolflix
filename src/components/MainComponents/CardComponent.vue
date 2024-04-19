@@ -211,7 +211,7 @@ export default {
                 this.flagUrl = `https://flagcdn.com/80x60/${this.info.language_flag}.png`;
             })
             .catch((error) => {
-                console.log('there is no flag', error);
+                console.log('there is no flag for', error);
             })
     },
 

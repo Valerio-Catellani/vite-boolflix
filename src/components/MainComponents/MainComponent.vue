@@ -1,7 +1,8 @@
 <template>
     <main class="position-relative">
         <CaruselComponent />
-        <div class=" container">
+        <div class="container d-flex flex-column justify-content-center align-items-center ">
+            <LoaderComponent v-if="store.isLoading" />
             <SearchResultsComponent v-for="element in findEmptyResults" :key="element[1].name"
                 :arrayValues="element[1].results" :title="element[1].name" :searchParameter="element[1].searchInput"
                 :typeOfCollection="element[1].type" />
@@ -13,12 +14,14 @@
 import { store } from '../../store';
 import SearchResultsComponent from '../MainComponents/SearchResultsComponent.vue';
 import CaruselComponent from '../MainComponents/CaruselComponent.vue';
+import LoaderComponent from '../MainComponents/LoaderComponent.vue';
 
 export default {
     name: 'MainComponent',
     components: {
         SearchResultsComponent,
-        CaruselComponent
+        CaruselComponent,
+        LoaderComponent
     },
     data() {
         return {

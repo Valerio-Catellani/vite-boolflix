@@ -8,8 +8,8 @@
                 <input class="form-control me-2 bg-dark-subtle" type="search" placeholder="Search" aria-label="Search"
                     v-model="userSearch">
                 <button class="btn btn-outline-danger btn-mine text-dark hover-size" type="submit"
-                    :disabled="!userSearch"
-                    @click.prevent="storeMethods.searchMedia(userSearch, ['movies', 'series'])">Search</button>
+                    :disabled="!userSearch" @click.prevent="storeMethods.searchMedia(userSearch, ['movies', 'series'])"
+                    @keyup.enter.prevent="storeMethods.searchMedia(userSearch, ['movies', 'series'])">Search</button>
             </form>
         </div>
     </header>
