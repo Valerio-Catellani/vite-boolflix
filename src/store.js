@@ -59,6 +59,7 @@ export const storeMethods = {
                 image: element.backdrop_path ? store.imageURL + element.poster_path : null,
                 description: element.overview,
                 language: element.original_language,
+                language_flag: storeMethods.getFlag(element.original_language),
                 title: element.title ?? element.name ?? 'no title aviable',
                 original_title: element.original_title ?? element.original_name ?? 'no original title aviable',
                 vote_average: element.vote_average,
@@ -91,6 +92,7 @@ export const storeMethods = {
             });
         store.options.params.query = '';
     },
+
     findTreningWeek() {
         axios.get(store.apiURL + store.endPoints.trending_movie_week, store.options).then((result) => {
             store.formattedResults.trending_week_movies.results = storeMethods.formatData(result.data.results);
@@ -104,5 +106,31 @@ export const storeMethods = {
         }).catch((error) => {
             console.log(error);
         })
+    },
+    getFlag(language) {
+        switch (language) {
+            case 'en':
+                return 'gb';
+            case 'us':
+                return 'us';
+            case 'pt':
+                return 'pt';
+            case 'it':
+                return 'it';
+            case 'ja':
+                return 'jp';
+            case 'ko':
+                return 'kr';
+            case 'fr':
+                return 'fr';
+            case 'de':
+                return 'de';
+            case 'es':
+                return 'es';
+            case 'ru':
+                return 'ru';
+            default: 'none'
+
+        }
     }
 }

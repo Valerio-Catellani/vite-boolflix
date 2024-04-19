@@ -1,5 +1,5 @@
 <template>
-    <div class="card-list-container my-3 py-3">
+    <div class="card-list-container my-3 pt-3">
         <div class="card-list-title container text-white ps-0">
             <div v-if="typeOfCollection === 'search' && searchParameter">
                 <h4 v-if="arrayValues.length === 0">No {{ title }} results found for "{{ searchParameter

@@ -13,8 +13,7 @@
                 :style="`width: ${startingWidth}px; height: ${startingHeight}px; left:${backXCompensation}px; top:${backYCompensation}px; background-image: url('${info.imageLarge}')`">
                 <div class="filter h-100 d-flex justify-content-center justify-content-md-start "
                     :class="{ 'full': !info.imageLarge }" :style="`opacity: ${opacity};`">
-                    <div
-                        class="information d-flex align-self-end w-50 w-75  flex-column align-items-start text-white p-3">
+                    <div class="information d-flex align-self-end w-75  flex-column align-items-start text-white p-3">
                         <h2 class="mine-text-shadow display-6 display-md-4 fw-bold ">{{ info.title }}</h2>
                         <h5 class="mine-text-shadow mb-3">Original title: {{ info.original_title }}</h5>
                         <div class="d-flex gap-1 align-items-center mb-3">
@@ -29,17 +28,18 @@
                                 <img class="img-fluid w-100" src="/images/empty-star.png" alt="star">
                             </div>
                         </div>
-                        <p>{{ info.description }}</p>
+                        <p class="description">{{ info.description }}</p>
                         <p>Release date: {{ info.release_date }}</p>
                         <div v-if="flagUrl" class="flag-container mb-3">
                             <img class="img-fluid w-100" :src="flagUrl" :alt="info.language">
                         </div>
                         <h6 class="mb-3" v-else>Language: {{ info.language }}</h6>
                         <div class="d-flex justify-content-center align-items-center align-self-center ">
-                            <i class="play mine-text-white-shadow border border-black text-success fa-regular fa-circle-play px-5"
+                            <i class="play mine-text-white-shadow text-success fa-regular fa-circle-play px-5 hover-size"
                                 role="button"></i>
-                            <button class="btn btn-danger text-center align-self-center shadow-white"
-                                @click.stop="closeDetails()">Close
+                            <button
+                                class="btn btn-mine text-center text-white align-self-center shadow-white hover-size"
+                                :disabled="opacity < 1" @click.stop="closeDetails()">Close
                                 Information</button>
                         </div>
                     </div>
@@ -91,7 +91,7 @@ export default {
             this.moveToCenter();
             setTimeout(() => {
                 const interval = setInterval(() => {
-                    if (this.opacity >= 1) {
+                    if (this.opacity > 1) {
                         clearInterval(interval);
                     } else {
                         this.opacity += 0.05;
@@ -110,6 +110,7 @@ export default {
             this.backXCompensation = 0;
             this.backYCompensation = 0;
             this.store.showModal = false;
+            this.opacity = 0;
         },
 
 
@@ -204,13 +205,12 @@ export default {
         this.stars.fullStars = Math.floor(this.info.vote_average / 2);
         this.stars.halfStars = Math.ceil(this.info.vote_average / 2) - this.stars.fullStars;
         this.stars.emptyStars = 5 - this.stars.fullStars - this.stars.halfStars;
-        axios.get(`https://flagcdn.com/16x12/${this.info.language}.png`)
+        axios.get(`https://flagcdn.com/80x60/${this.info.language_flag}.png`)
             .then(() => {
                 this.hasFlag = true;
-                this.flagUrl = `https://flagcdn.com/16x12/${this.info.language}.png`;
+                this.flagUrl = `https://flagcdn.com/80x60/${this.info.language_flag}.png`;
             })
             .catch((error) => {
-
                 console.log('there is no flag', error);
             })
     },
@@ -240,6 +240,11 @@ export default {
         z-index: 1000;
         position: relative;
 
+        &:hover .front {
+            transform: translatey(10px);
+            transition: transform 0.2s ease-in;
+        }
+
         .front,
         .back {
             width: 100%;
@@ -252,6 +257,10 @@ export default {
 
         .front {
             cursor: pointer;
+        }
+
+        .back {
+            transform: rotateY(180deg); // Inizialmente mostra la parte posteriore della carta
         }
 
         .no-image {
@@ -267,12 +276,6 @@ export default {
             .filter {
                 background: linear-gradient(0deg, rgba(0, 0, 0, 1) 23%, rgba(0, 0, 0, 0) 100%);
 
-                @media screen and (max-width: 768px) {
-                    .information {
-                        width: 60% !important;
-                    }
-                }
-
                 h2 {
                     color: $main-red-color;
                 }
@@ -282,12 +285,18 @@ export default {
                     aspect-ratio: 1/1;
                 }
 
+                .description {
+                    max-height: 200px;
+                    overflow: auto;
+                }
+
                 .flag-container {
                     width: 32px;
                 }
 
                 .play {
                     font-size: 4rem;
+                    box-shadow: none;
                 }
             }
 
@@ -306,9 +315,5 @@ export default {
 
 .inactive {
     position: static !important;
-}
-
-.back {
-    transform: rotateY(180deg); // Inizialmente mostra la parte posteriore della carta
 }
 </style>

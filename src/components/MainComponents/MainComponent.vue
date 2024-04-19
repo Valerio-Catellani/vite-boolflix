@@ -1,5 +1,6 @@
 <template>
     <main class="position-relative">
+        <VideoPreviewComponent />
         <div class=" container">
             <SearchResultsComponent v-for="element in findEmptyResults" :key="element[1].name"
                 :arrayValues="element[1].results" :title="element[1].name" :searchParameter="element[1].searchInput"
@@ -11,11 +12,13 @@
 <script>
 import { store } from '../../store';
 import SearchResultsComponent from '../MainComponents/SearchResultsComponent.vue';
+import VideoPreviewComponent from '../MainComponents/VideoPreviewComponent.vue';
 
 export default {
     name: 'MainComponent',
     components: {
-        SearchResultsComponent
+        SearchResultsComponent,
+        VideoPreviewComponent
     },
     data() {
         return {
@@ -25,8 +28,6 @@ export default {
     computed: {
         findEmptyResults() {
             let emptyResults = Object.entries(store.formattedResults).filter(element => {
-                //console.log(Object.entries(store.formattedResults));
-                console.log(element[0], element[1]);
                 return element[1].results.length > 0
             })
             return emptyResults

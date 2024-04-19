@@ -24,6 +24,20 @@ body{
     box-shadow: 0 0 5px $contrast-color;
 }
 
+.mine-main-color{
+    color: $main-red-color;
+}
+
+.btn-mine{
+    background-color: $main-red-color !important;
+}
+
+.hover-size:hover {
+    transform: scale(1.1);
+    transition: transform 0.1s ease-in;
+    box-shadow: 0 0 5px $contrast-color;
+}
+
 .mine-text-shadow{
    text-shadow: 
   -1px -1px 0 #000,  

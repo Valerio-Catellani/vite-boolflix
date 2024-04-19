@@ -7,7 +7,8 @@
             <form class="d-flex" role="search">
                 <input class="form-control me-2 bg-dark-subtle" type="search" placeholder="Search" aria-label="Search"
                     v-model="userSearch">
-                <button class="btn btn-outline-danger text-dark" type="submit" :disabled="!userSearch"
+                <button class="btn btn-outline-danger btn-mine text-dark hover-size" type="submit"
+                    :disabled="!userSearch"
                     @click.prevent="storeMethods.searchMedia(userSearch, ['movies', 'series'])">Search</button>
             </form>
         </div>
@@ -46,7 +47,6 @@ header {
     }
 
     button {
-        background-color: $main-red-color !important;
 
         &:hover {
             color: $contrast-color !important;
