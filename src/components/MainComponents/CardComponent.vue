@@ -163,7 +163,6 @@ export default {
                 }
             }, 16);
         },
-
         expandDetailsX() {
             const inerval = setInterval(() => {
                 if (this.startingWidth < this.endingWidth) {

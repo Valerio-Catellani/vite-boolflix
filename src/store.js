@@ -62,9 +62,6 @@ export const store = reactive({
 
 });
 
-
-
-
 export const storeMethods = {
     formatData(data) {
         let newArray = data.map((element) => {
@@ -198,5 +195,3 @@ export const storeMethods = {
         })
     }
 }
-
-

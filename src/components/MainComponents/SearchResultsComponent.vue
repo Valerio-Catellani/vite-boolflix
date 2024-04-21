@@ -69,8 +69,8 @@ export default {
                 this.moveValue += 125; //!
                 this.$refs.scrollable.setAttribute('style', `left: ${this.moveValue}px`);
             } else {
-                this.count--
                 this.moveValue -= 125 //!
+                this.count--
                 this.$refs.scrollable.setAttribute('style', `left: ${this.moveValue}px`)
             }
         },

@@ -1,10 +1,14 @@
 <template>
-    <div id="offCanvas" class=" position-fixed bottom-0 w-100" :class="{ 'open': store.fullVideo.isPlaying }">
+    <div id="offCanvas" class=" position-fixed bottom-0 w-100" @click="console.log(store.fullVideo.element)"
+        :class="{ 'open': store.fullVideo.isPlaying }">
         <div class="close-button d-flex align-items-center justify-content-center">
             <i class="mine-text-white-shadow text-danger fa-solid hover-size fa-xmark" role="button"
                 @click="closeVideo()"></i>
         </div>
-        <div class="video-container">
+        <div v-if="!store.fullVideo.element && store.fullVideo.isPlaying" class="text-center text-white my-5">
+            <h2>Cannot reproduce video. Please try later. If the problem persists, please contact us.</h2>
+        </div>
+        <div v-else class="video-container">
             <iframe v-if="store.fullVideo.isPlaying" ref="mineVideo" width="100%" height="100%"
                 title="YouTube video player" frameborder="10"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -27,6 +31,7 @@ export default {
     methods: {
         closeVideo() {
             this.store.fullVideo.isPlaying = false
+            this.store.fullVideo.element = ''
         }
     },
 

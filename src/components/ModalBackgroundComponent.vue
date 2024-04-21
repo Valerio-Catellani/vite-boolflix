@@ -12,8 +12,8 @@ export default {
 <style lang="scss" scoped>
 .modal-background {
     position: fixed;
-    top: 70px;
-    z-index: 5;
+    top: 0%;
+    z-index: 1000;
     left: 0;
     width: 100vw;
     height: calc(100vh - 70px);
