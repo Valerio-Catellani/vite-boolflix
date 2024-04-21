@@ -1,6 +1,7 @@
 <template>
     <div class="wrapper px-5">
-        <div id="carouselExampleIndicators" class="carousel slide h-100 container">
+        <div id="carouselExampleIndicators" class="carousel slide h-100 container" @mouseover="stopAutomaticScroll"
+            @mouseleave="AutomaticScroll">
             <div class="carousel-inner container pt-4">
                 <template v-for="(element, index) in store.carusel.results" :key="element">
                     <div class="carousel-item" :class="{ 'active': index === count - 1 }" v-if="index === count - 1">
@@ -43,8 +44,31 @@ export default {
             storeMethods,
             numberOfElements: 5,
             count: 1,
+            interval: null
         }
-    }
+    },
+
+    methods: {
+        AutomaticScroll() {
+            if (!this.interval) {
+                this.interval = setInterval(() => {
+                    if (this.count < 5) {
+                        this.count++
+                    } else {
+                        this.count = 1
+                    }
+                }, 1000 * 10)
+            }
+        },
+        stopAutomaticScroll() {
+            clearInterval(this.interval)
+            this.interval = null
+        }
+    },
+
+    mounted() {
+        this.AutomaticScroll()
+    },
 
 }
 </script>

@@ -149,7 +149,20 @@ export const storeMethods = {
                 return 'es';
             case 'ru':
                 return 'ru';
-            default: 'none'
+            case 'cr':
+                return 'cr';
+            case 'cs':
+                return 'cz';
+            case 'ar':
+                return 'sa';
+            case 'ta':
+                return 'in';
+            case 'zh':
+                return 'cn';
+            case 'te':
+                return 'in';
+            default:
+                return `${language}`
 
         }
     },
@@ -158,7 +171,7 @@ export const storeMethods = {
         store.carusel.results.forEach(element => {
             axios.get(store.apiURL + 'movie/' + element.id + '/videos', store.options).then((result) => {
                 let video_key = result.data.results[1].key;
-                let video_url = `https://www.youtube.com/embed/${video_key}?si=7WVdVnX7WPoDjXed&amp;controls=0&autoplay=1&loop=1&playlist=${video_key}&rel=0&end=30&showinfo=0&modestbranding=1`;
+                let video_url = `https://www.youtube.com/embed/${video_key}?si=7WVdVnX7WPoDjXed&amp;controls=0&mute=1&autoplay=1&loop=1&playlist=${video_key}&rel=0&end=30&showinfo=0&modestbranding=1`;
                 element.video = video_url
             }).catch((error) => {
                 console.log(error);

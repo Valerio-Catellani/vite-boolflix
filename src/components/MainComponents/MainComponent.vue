@@ -1,11 +1,14 @@
 <template>
     <main class="position-relative">
         <CaruselComponent />
-        <div class="container d-flex flex-column justify-content-center align-items-center ">
+        <div class="container d-flex flex-column">
             <LoaderComponent v-if="store.isLoading" />
-            <SearchResultsComponent v-for="element in findEmptyResults" :key="element[1].name"
-                :arrayValues="element[1].results" :title="element[1].name" :searchParameter="element[1].searchInput"
-                :typeOfCollection="element[1].type" />
+            <template v-for="element in findEmptyResults" :key="element[1].name">
+                <SearchResultsComponent
+                    v-if="(element[1].type === 'search' && !this.store.isLoading) || element[1].type === 'normal'"
+                    :arrayValues="element[1].results" :title="element[1].name" :searchParameter="element[1].searchInput"
+                    :typeOfCollection="element[1].type" />
+            </template>
         </div>
     </main>
 </template>
@@ -43,6 +46,6 @@ export default {
 @use '../../assets/styles/partials/variables' as *;
 
 main {
-    margin-top: 80px;
+    margin-top: 60px;
 }
 </style>

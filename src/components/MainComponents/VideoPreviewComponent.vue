@@ -5,7 +5,7 @@
             <h2 class="mine-main-color mine-text-shadow display-6 fw-bold mb-3"> {{ info.title }} </h2>
             <h6 class="mb-4 pb-2">Popularity : {{ info.popularity }}</h6>
             <div class="button-container d-flex align-items-center ">
-                <button class="btn btn-mine hover-size text-white p-xl-3 p-2 me-xl-4 me-2" @click="muted">More
+                <button class="btn btn-mine hover-size text-white p-xl-3 p-2 me-xl-4 me-2">More
                     Information</button>
                 <div class="icon-container rounded-circle" style="width: 50px; height: 50px;" role="button">
                     <i

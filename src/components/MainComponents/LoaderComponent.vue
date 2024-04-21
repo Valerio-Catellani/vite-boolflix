@@ -1,5 +1,5 @@
 <template>
-    <div class="loader w-50 d-flex justify-content-center">
+    <div class="loader w-50 d-flex justify-content-center align-self-center ">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"
             preserveAspectRatio="xMidYMid" width="305" height="305"
             style="shape-rendering: auto; display: block; background: rgba(255, 255, 255, 0);">
