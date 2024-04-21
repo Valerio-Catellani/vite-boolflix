@@ -14,7 +14,7 @@
             <div v-if="count !== 0" class="arrow-container" @click="scroll('left')">
                 <i class="arrow fa-solid fa-caret-left fa-2xl mine-text-shadow"></i>
             </div>
-            <div ref="scrollable" class="d-flex position-relative scrollable">
+            <div ref="scrollable" class="rail d-flex position-relative">
                 <CardComponent v-for="element in arrayValues" :key="element.id" :info="element" />
             </div>
             <div v-if="-count < maxScroll" class="arrow-container arrow-container-right" @click="scroll('right')">
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { store } from '../../store';
 import CardComponent from '../MainComponents/CardComponent.vue';
 
 export default {
@@ -63,7 +62,6 @@ export default {
     },
     methods: {
         scroll(direction) {
-
             if (direction === 'left') {
                 this.count++
                 this.moveValue += 125; //!
@@ -95,7 +93,8 @@ export default {
 .card-list-card-container {
     height: 220px;
 
-    .scrollable {
+    .rail {
+        left: 0;
         transition: left 0.5s;
     }
 
