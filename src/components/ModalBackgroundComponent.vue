@@ -16,7 +16,7 @@ export default {
     z-index: 1000;
     left: 0;
     width: 100vw;
-    height: calc(100vh - 70px);
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
 }
 </style>

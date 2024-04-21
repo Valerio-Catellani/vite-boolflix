@@ -1,19 +1,22 @@
 <template>
+    <div class="load splash-page vw-100 vh-100 text-white" v-if="loading"></div>
     <div v-if="opacity > 0" class="splash-page vw-100 vh-100" :style="{ opacity: opacity }">
-        <button class='glowing-btn' @click="increase" :class="{ 'glowing-btn-hover': active }"
-            :style="{ transform: 'scale(' + dimension + ')' }">
+        <div class='glowing-btn' :style="{ transform: 'scale(' + dimension + ')' }">
             <span class='glowing-txt'>B<span class='faulty-letter'>OO</span>LFL<span
-                    class='faulty-letter'>I</span>X</span></button>
+                    class='faulty-letter'>I</span>X</span>
+        </div>
     </div>
 </template>
 
 <script>
+import { store } from '../store';
 export default {
     name: 'SplashPageComponent',
     data() {
         return {
-            name: 'Boolflix',
+            store,
             dimension: 1,
+            loading: true,
             active: false,
             opacity: 1
         }
@@ -22,7 +25,10 @@ export default {
         handleAnimation() {
             setTimeout(() => { this.active = true }, 2000) //! 2 seconds;
             setTimeout(() => { this.increase() }, 2500) //! 1 + 2 seconds;
-            setTimeout(() => { this.opacityReduce() }, 2500) //! 1 + 2 + 3 seconds;
+            setTimeout(() => {
+                this.opacityReduce()
+                this.store.showModal = false
+            }, 2500) //! 1 + 2 + 3 seconds;
         },
         increase() {
             const intervall = setInterval(() => {
@@ -45,7 +51,11 @@ export default {
     },
 
     created() {
-        this.handleAnimation()
+        this.store.showModal = true
+        setTimeout(() => {
+            this.loading = false
+            this.handleAnimation()
+        }, 1000)
     }
 }
 </script>
@@ -55,8 +65,12 @@ export default {
 <style lang="scss" scoped>
 @use '../assets/styles/partials/variables' as *;
 
+.load {
+    z-index: 10000 !important;
+}
+
 .splash-page {
-    z-index: 10000;
+    z-index: 1500;
     position: fixed;
     left: 0;
     top: 0;
