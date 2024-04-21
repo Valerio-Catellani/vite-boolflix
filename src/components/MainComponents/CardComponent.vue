@@ -36,9 +36,9 @@
                         </div>
                         <h6 class="mb-3" v-else>Language: {{ info.language }}</h6>
                         <div class="d-flex justify-content-center align-items-center align-self-center ">
-                            <i class="play mine-text-white-shadow text-success fa-regular fa-circle-play px-5 hover-size"
+                            <i class="play mine-text-white-shadow text-success fa-regular fa-circle-play px-5 hover-size "
                                 role="button" @click="playVideo()"></i>
-                            <i class="play mine-text-white-shadow text-danger fa-solid hover-size fa-xmark"
+                            <i class="play mine-text-white-shadow text-danger fa-solid hover-size fa-xmark "
                                 role="button" @click.stop="opacity < 1 ? '' : closeDetails()"></i>
                         </div>
                     </div>

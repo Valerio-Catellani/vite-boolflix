@@ -2,7 +2,7 @@
     <div id="offCanvas" class=" position-fixed bottom-0 w-100" @click="console.log(store.fullVideo.element)"
         :class="{ 'open': store.fullVideo.isPlaying }">
         <div class="close-button d-flex align-items-center justify-content-center">
-            <i class="mine-text-white-shadow text-danger fa-solid hover-size fa-xmark" role="button"
+            <i class="mine-text-white-shadow text-danger fa-solid hover-size fa-xmark " role="button"
                 @click="closeVideo()"></i>
         </div>
         <div v-if="!store.fullVideo.element && store.fullVideo.isPlaying" class="text-center text-white my-5">

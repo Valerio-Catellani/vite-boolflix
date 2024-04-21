@@ -12,13 +12,13 @@
         <div ref="containerDimensioned"
             class="card-list-card-container container d-flex position-relative overflow-x-hidden px-0">
             <div v-if="count !== 0" class="arrow-container" @click="scroll('left')">
-                <i class="arrow fa-solid fa-caret-left fa-2xl mine-text-shadow"></i>
+                <i class="arrow fa-solid fa-caret-left fa-2xl mine-text-shadow "></i>
             </div>
             <div ref="scrollable" class="rail d-flex position-relative">
                 <CardComponent v-for="element in arrayValues" :key="element.id" :info="element" />
             </div>
             <div v-if="-count < maxScroll" class="arrow-container arrow-container-right" @click="scroll('right')">
-                <i class="arrow fa-solid fa-caret-right fa-2xl mine-text-shadow"></i>
+                <i class="arrow fa-solid fa-caret-right fa-2xl mine-text-shadow "></i>
             </div>
         </div>
     </div>

@@ -1,7 +1,8 @@
 <template>
     <div class="load splash-page vw-100 vh-100 text-white" v-if="loading"></div>
     <div v-if="opacity > 0" class="splash-page vw-100 vh-100" :style="{ opacity: opacity }">
-        <div class='glowing-btn' :style="{ transform: 'scale(' + dimension + ')' }">
+        <div class='glowing-btn' :style="{ transform: 'scale(' + dimension + ')' }"
+            :class="{ 'glowing-btn-hover': active }">
             <span class='glowing-txt'>B<span class='faulty-letter'>OO</span>LFL<span
                     class='faulty-letter'>I</span>X</span>
         </div>
@@ -91,7 +92,6 @@ export default {
 .glowing-btn {
     position: relative;
     color: $main-red-color;
-    cursor: pointer;
     padding: 0.35em 1em;
     border: 0.15em solid $main-red-color;
     border-radius: 0.45em;

@@ -11,12 +11,12 @@
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                 @click="count <= 1 ? count = 5 : count--">
-                <i class="arrow fa-solid fa-caret-left fa-2xl mine-text-shadow"></i>
+                <i class="arrow fa-solid fa-caret-left fa-2xl mine-text-shadow "></i>
                 <span class="visually-hidden">Previous</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
                 @click="count < 5 ? count++ : count = 1">
-                <i class="arrow fa-solid fa-caret-right fa-2xl mine-text-shadow"></i>
+                <i class="arrow fa-solid fa-caret-right fa-2xl mine-text-shadow "></i>
                 <span class="visually-hidden">Next</span>
             </button>
             <div class="carousel-indicators py-3">

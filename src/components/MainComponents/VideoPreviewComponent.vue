@@ -10,7 +10,7 @@
                     Information</button>
                 <div class="icon-container rounded-circle" style="width: 50px; height: 50px;" role="button">
                     <i
-                        class="fa-solid fa-plus fw-bold w-100 h-100 d-flex align-items-center justify-content-center"></i>
+                        class="fa-solid fa-plus fw-bold w-100 h-100 d-flex align-items-center justify-content-center "></i>
                 </div>
             </div>
         </div>
