@@ -20,6 +20,10 @@ export const store = reactive({
     showModal: false,
     isLoading: false,
     moreInformation: '',
+    fullVideo: {
+        element: '',
+        isPlaying: false,
+    },
     formattedResults: {
         searched_movies: {
             name: 'Searched Movies',
@@ -68,6 +72,7 @@ export const storeMethods = {
                 id: element.id,
                 adult: element.adult,
                 video: '',
+                url_fullVideo: '',
                 image: element.backdrop_path ? store.imageURL + element.poster_path : null,
                 description: element.overview,
                 language: element.original_language,
@@ -180,7 +185,17 @@ export const storeMethods = {
                 console.log(error);
             })
         })
-
+    },
+    getFullVideo(element) {
+        store.fullVideo.isPlaying = true;
+        axios.get(store.apiURL + 'movie/' + element.id + '/videos', store.options).then((result) => {
+            let video_key = result.data.results[0].key;
+            let video_url = `https://www.youtube.com/embed/${video_key}?si=7WVdVnX7WPoDjXed&amp;autoplay=1&fs=1&rel=0&playlist=${video_key}`;
+            element.url_fullVideo = video_url;
+            store.fullVideo.element = element;
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 }
 

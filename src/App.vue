@@ -2,7 +2,7 @@
   <SplashPageComponent />
   <HeaderComponent />
   <ModalBackgroundComponent v-if="store.showModal" />
-  <MainComponent />
+  <MainComponent v-if="!store.isPlaying" />
   <OffCanvasComponent />
   <FooterComponent />
 
@@ -53,8 +53,6 @@ export default {
   created() {
     this.storeMethods.findTreningWeek();
     this.storeMethods.findPopularSeries()
-    // this.getMovies();
-    //this.store.formattedResults = this.storeMethods.formatData(this.store.rawResults);
   }
 }
 </script>

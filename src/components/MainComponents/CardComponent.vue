@@ -37,7 +37,7 @@
                         <h6 class="mb-3" v-else>Language: {{ info.language }}</h6>
                         <div class="d-flex justify-content-center align-items-center align-self-center ">
                             <i class="play mine-text-white-shadow text-success fa-regular fa-circle-play px-5 hover-size"
-                                role="button"></i>
+                                role="button" @click="playVideo()"></i>
                             <i class="play mine-text-white-shadow text-danger fa-solid hover-size fa-xmark"
                                 role="button" @click.stop="opacity < 1 ? '' : closeDetails()"></i>
                         </div>
@@ -185,7 +185,6 @@ export default {
                 }
             }, 10)
         },
-
         handleWiewprth() {
             if (window.innerWidth < 760) {
                 this.endingWidth = 550;
@@ -199,10 +198,16 @@ export default {
                 this.endingHeight = 600
             }
         },
+        playVideo() {
+            if (!this.opacity < 1) {
+                //this.store.closeDetails()
+                this.storeMethods.getFullVideo(this.info);
+            }
+        },
+
 
     },
     created() {
-        console.log(store.moreInformation);
         this.stars.fullStars = Math.floor(this.info.vote_average / 2);
         this.stars.halfStars = Math.ceil(this.info.vote_average / 2) - this.stars.fullStars;
         this.stars.emptyStars = 5 - this.stars.fullStars - this.stars.halfStars;
@@ -219,6 +224,11 @@ export default {
         'store.moreInformation'(newValue, oldValue) {
             if (newValue === this.info.id) {
                 this.openDetails();
+            }
+        },
+        'store.fullVideo.isPlaying'(newValue, oldValue) {
+            if (newValue === false) {
+                this.closeDetails();
             }
         }
     }

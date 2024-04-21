@@ -1,5 +1,5 @@
 <template>
-    <main class="position-relative">
+    <main class="position-relative mt-5 m-4 m-md-5">
         <CaruselComponent />
         <div class="container d-flex flex-column">
             <LoaderComponent v-if="store.isLoading" />
@@ -42,10 +42,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@use '../../assets/styles/partials/variables' as *;
-
-main {
-    margin: 60px;
-}
-</style>
+<style lang="scss" scoped></style>

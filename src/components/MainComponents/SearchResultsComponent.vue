@@ -65,12 +65,12 @@ export default {
         scroll(direction) {
 
             if (direction === 'left') {
-                this.moveValue += 125; //!
                 this.count++
+                this.moveValue += 125; //!
                 this.$refs.scrollable.setAttribute('style', `left: ${this.moveValue}px`);
             } else {
-                this.moveValue -= 125 //!
                 this.count--
+                this.moveValue -= 125 //!
                 this.$refs.scrollable.setAttribute('style', `left: ${this.moveValue}px`)
             }
         },
