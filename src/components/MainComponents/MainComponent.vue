@@ -24,7 +24,7 @@ export default {
     components: {
         SearchResultsComponent,
         CaruselComponent,
-        LoaderComponent
+        LoaderComponent,
     },
     data() {
         return {

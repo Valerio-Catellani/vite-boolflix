@@ -19,6 +19,7 @@ export const store = reactive({
     },
     showModal: false,
     isLoading: false,
+    moreInformation: '',
     formattedResults: {
         searched_movies: {
             name: 'Searched Movies',

@@ -2,7 +2,7 @@
     <div class="film-card">
         <div class="card-playground" ref="playground" :class="isFlipped ? 'flipped' : 'inactive'"
             :style="{ transform: `rotateY(${rotDeg}deg)`, left: `${initialX}px`, top: `calc(${initialY}px)` }"
-            @click="!isFlipped ? openDetails($event.target) : ''">
+            @click="!isFlipped ? openDetails() : ''">
             <div class="front img-container">
                 <img v-if="info.image" class="img-fluid h-100" :src="info.image" :alt="info.title">
                 <div v-else class="no-image h-100">
@@ -39,7 +39,7 @@
                             <i class="play mine-text-white-shadow text-success fa-regular fa-circle-play px-5 hover-size"
                                 role="button"></i>
                             <i class="play mine-text-white-shadow text-danger fa-solid hover-size fa-xmark"
-                                role="button" :disabled="opacity < 1" @click.stop="closeDetails()"></i>
+                                role="button" @click.stop="opacity < 1 ? '' : closeDetails()"></i>
                         </div>
                     </div>
                 </div>
@@ -101,6 +101,7 @@ export default {
         },
         closeDetails() {
             this.handleDegAnimation(180, 0, 1, '-');
+            this.store.moreInformation = '';
             this.isFlipped = false;
             this.startingWidth = 125; //!
             this.startingHeight = 200; //!
@@ -201,6 +202,7 @@ export default {
 
     },
     created() {
+        console.log(store.moreInformation);
         this.stars.fullStars = Math.floor(this.info.vote_average / 2);
         this.stars.halfStars = Math.ceil(this.info.vote_average / 2) - this.stars.fullStars;
         this.stars.emptyStars = 5 - this.stars.fullStars - this.stars.halfStars;
@@ -213,6 +215,13 @@ export default {
                 console.log('there is no flag for', this.info.language_flag);
             })
     },
+    watch: {
+        'store.moreInformation'(newValue, oldValue) {
+            if (newValue === this.info.id) {
+                this.openDetails();
+            }
+        }
+    }
 
 
 }

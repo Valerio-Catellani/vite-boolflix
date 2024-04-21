@@ -3,6 +3,7 @@
   <HeaderComponent />
   <ModalBackgroundComponent v-if="store.showModal" />
   <MainComponent />
+  <OffCanvasComponent />
   <FooterComponent />
 
 </template>
@@ -15,6 +16,7 @@ import MainComponent from './components/MainComponents/MainComponent.vue';
 import ModalBackgroundComponent from './components/ModalBackgroundComponent.vue';
 import SplashPageComponent from './components/SplashPageComponent.vue';
 import FooterComponent from './components/FooterComponents/FooterComponent.vue';
+import OffCanvasComponent from './components/OffCanvasComponent.vue';
 
 export default {
   name: 'App',
@@ -23,7 +25,8 @@ export default {
     MainComponent,
     ModalBackgroundComponent,
     SplashPageComponent,
-    FooterComponent
+    FooterComponent,
+    OffCanvasComponent
   },
   data() {
     return {
