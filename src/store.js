@@ -161,6 +161,8 @@ export const storeMethods = {
                 return 'cn';
             case 'te':
                 return 'in';
+            case 'fa':
+                return 'ir';
             default:
                 return `${language}`
 

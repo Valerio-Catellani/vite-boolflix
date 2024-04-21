@@ -46,6 +46,6 @@ export default {
 @use '../../assets/styles/partials/variables' as *;
 
 main {
-    margin-top: 60px;
+    margin: 60px;
 }
 </style>

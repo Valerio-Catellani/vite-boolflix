@@ -1,6 +1,6 @@
 <template>
     <header class="shadow-white" @click="console.log(initialPositionWindow)">
-        <div class="fixed-header container d-flex rounded-4 align-items-center justify-content-between"
+        <div class="fixed-header container d-flex rounded-4 align-items-center justify-content-between shadow"
             :class="{ 'window-movement': checkMovement, 'rounded-bottom-0': openSearch }">
             <div class="img-container py-1">
                 <img class="img-fluid" src="/images/Boolflix_logo.jpg" alt="Boolflix logo">

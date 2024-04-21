@@ -1,9 +1,9 @@
 <template>
     <div class="d-flex flex-column-reverse flex-md-row align-items-center">
         <div
-            class="highlight-info text-white d-flex justify-content-end flex-column align-items-center align-items-md-start pt-3">
+            class="highlight-info text-white d-flex justify-content-start justify-content-xl-end flex-column align-items-center align-items-md-start pt-2 pt-xl-3">
             <h2 class="mine-main-color mine-text-shadow display-6 fw-bold mb-3"> {{ info.title }} </h2>
-            <h6 class="mb-4 pb-2">Popularity : {{ info.popularity }}</h6>
+            <h6 class="mb-xl-4 mb-2 pb-2">Popularity : {{ info.popularity }}</h6>
             <div class="button-container d-flex align-items-center ">
                 <button class="btn btn-mine hover-size text-white p-xl-3 p-2 me-xl-4 me-2">More
                     Information</button>
@@ -55,12 +55,6 @@ export default {
     width: 35%;
 
 
-    .button-container,
-    h2,
-    h6 {
-        animation: moveUp 0.5s ease-in-out alternate forwards;
-    }
-
     .fa-plus {
         font-size: 2rem;
     }
@@ -83,6 +77,15 @@ export default {
 
 
 /** MEDIA QUERIES */
+
+@media screen and (min-width: 1000px) {
+
+    .button-container,
+    h2,
+    h6 {
+        animation: moveUp 0.5s ease-in-out alternate forwards;
+    }
+}
 
 
 @media screen and (max-width: 1400px) {

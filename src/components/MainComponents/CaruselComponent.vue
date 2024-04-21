@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper px-5">
+    <div class="wrapper px-5 rounded-5 ">
         <div id="carouselExampleIndicators" class="carousel slide h-100 container" @mouseover="stopAutomaticScroll"
             @mouseleave="AutomaticScroll">
             <div class="carousel-inner container pt-4">

@@ -9,7 +9,8 @@
                     <h6 class="text-white text-center p-2 overflow-hidden">{{ info.title }}</h6>
                 </div>
             </div>
-            <div class="back border-dark border rounded-2 overflow-hidden" :class="{ 'opacity-0': !isFlipped }"
+            <div class="back border-dark border rounded-2 overflow-hidden shadow-white"
+                :class="{ 'opacity-0': !isFlipped }"
                 :style="`width: ${startingWidth}px; height: ${startingHeight}px; left:${backXCompensation}px; top:${backYCompensation}px; background-image: url('${info.imageLarge}')`">
                 <div class="filter h-100 d-flex justify-content-center justify-content-md-start "
                     :class="{ 'full': !info.imageLarge }" :style="`opacity: ${opacity};`">
@@ -37,10 +38,8 @@
                         <div class="d-flex justify-content-center align-items-center align-self-center ">
                             <i class="play mine-text-white-shadow text-success fa-regular fa-circle-play px-5 hover-size"
                                 role="button"></i>
-                            <button
-                                class="btn btn-mine text-center text-white align-self-center shadow-white hover-size"
-                                :disabled="opacity < 1" @click.stop="closeDetails()">Close
-                                Information</button>
+                            <i class="play mine-text-white-shadow text-danger fa-solid hover-size fa-xmark"
+                                role="button" :disabled="opacity < 1" @click.stop="closeDetails()"></i>
                         </div>
                     </div>
                 </div>
